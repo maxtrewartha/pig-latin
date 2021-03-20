@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"regexp"
 	"strings"
 )
 
@@ -13,10 +12,13 @@ func main() {
 	fmt.Println(pigLatin(phrase))
 }
 
-// Yes, this is a function, there really isnt anything to say about it
-func isVowel(letter string) bool {
-	r, _ := regexp.Compile("^[aeiou]$")
-	return r.MatchString(letter)
+// I removed the regex cuz it was slow
+func isVowel(letter byte) bool {
+	if letter == 'a' || letter == 'e' || letter == 'i' || letter == 'o' || letter == 'u' || letter == 'A' || letter == 'E' || letter == 'I' || letter == 'O' || letter == 'U' {
+		return true
+	} else {
+		return false
+	}
 }
 
 func pigLatin(phrase []string) string {
@@ -29,7 +31,7 @@ func pigLatin(phrase []string) string {
 	 */
 	for i := range phrase {
 		// If it starts with a vowel, just add "way"
-		if isVowel(string(phrase[i][0])) {
+		if isVowel(phrase[i][0]) {
 			phrase[i] += "way"
 			continue
 		}
@@ -40,19 +42,15 @@ func pigLatin(phrase []string) string {
 		}
 		// Ok so what this can do is loop until the first letter of the word is not a vowel
 		for {
-			if !isVowel(string(phrase[i][0])) {
+			if !isVowel(phrase[i][0]) {
 				var tmp string = string(phrase[i][0])
 				phrase[i] = phrase[i][1:]
 				phrase[i] += tmp
-
-				fmt.Println(phrase[i])
-
 			} else {
 				phrase[i] += "ay"
 				break
 			}
 		}
-		fmt.Println(phrase[i])
 	}
 	return strings.ToLower(strings.Join(phrase, " "))
 }

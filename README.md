@@ -1,2 +1,2 @@
-# pig-latin
- Pig latin translator
+# Pig Latin
+ Pig latin translator, take any phrase and make it into pig latin
