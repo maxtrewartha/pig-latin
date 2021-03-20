@@ -20,13 +20,14 @@ func isVowel(letter string) bool {
 }
 
 func pigLatin(phrase []string) string {
-	// It makes
+	/**
+	 * There are four instances for pig latin:
+	 * Word starts with a vowel, just add "way", artist -> artistway
+	 * Word starts with a consonant, move letter to end and add "ay", food -> oodfay
+	 * Word starts with consonant cluster, move the cluster to the  end and add "ay", swimming -> immingsway
+	 * Word has no vowel, impossible
+	 */
 	for i := range phrase {
-		/**
-		 * This takes the first consonant cluster from the start of a word and then moves it to the end of the word and then adds "way"/"ay"
-		 * Eg. food -> oodfay, swimming -> immingsway
-		 */
-
 		// If it starts with a vowel, just add "way"
 		if isVowel(string(phrase[i][0])) {
 			phrase[i] += "way"
@@ -36,10 +37,22 @@ func pigLatin(phrase []string) string {
 		if len(phrase[i]) < 2 {
 			phrase[i] += "ay"
 			continue
-		} else {
-
 		}
+		// Ok so what this can do is loop until the first letter of the word is not a vowel
+		for {
+			if !isVowel(string(phrase[i][0])) {
+				var tmp string = string(phrase[i][0])
+				phrase[i] = phrase[i][1:]
+				phrase[i] += tmp
 
+				fmt.Println(phrase[i])
+
+			} else {
+				phrase[i] += "ay"
+				break
+			}
+		}
+		fmt.Println(phrase[i])
 	}
-	return strings.Join(phrase, "")
+	return strings.ToLower(strings.Join(phrase, " "))
 }
